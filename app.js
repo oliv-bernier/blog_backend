@@ -4,6 +4,7 @@ const path = require('path');
 
 const articlesRoutes = require('./routes/articles');
 const userRoutes = require('./routes/user');
+const categoryRoutes = require('./routes/category');
 
 const MongoDB = require('./database/connect');
 
@@ -24,5 +25,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/articles', articlesRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/categories', categoryRoutes);
 
 module.exports = app;

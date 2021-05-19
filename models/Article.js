@@ -6,6 +6,11 @@ const articleSchema = mongoose.Schema({
   content: { type: String, required: true },
   imageUrl: { type: String },
   userId: { type: String, required: true },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+  }
 },
 {
   timestamps: true,

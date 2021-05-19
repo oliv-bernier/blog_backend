@@ -5,7 +5,7 @@ const articlesCtrl = require('../controllers/articleController');
 // const auth = require('../middlewares/auth');
 
 // create
-router.post('/', articlesCtrl.createArticle);
+router.post('/:category', articlesCtrl.createArticle);
 // update
 router.put('/:id', articlesCtrl.modifyArticle);
 // delet
