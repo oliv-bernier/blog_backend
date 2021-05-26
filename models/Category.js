@@ -6,6 +6,6 @@ const categorySchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Article"
   }]
-})
+});
 
 module.exports = mongoose.model('Category', categorySchema);

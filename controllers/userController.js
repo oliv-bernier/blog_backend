@@ -7,10 +7,11 @@ exports.signup = (req, res, next) => {
 			.then(hash => {
 				const user = new User({
 					email: req.body.email,
-					password: hash
+					password: hash,
+					name: req.body.name,
 				});
 				user.save()
-					.then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+					.then(() => res.status(201).json({ message: 'Utilisateur créé' }))
 					.catch(err => res.status(400).json({ error }));
 			})
 			.catch(err => res.status(500).json({ error }))
@@ -20,15 +21,16 @@ exports.login = (req, res, next) => {
 	User.findOne({ email: req.body.email })
 		.then(user => {
 			if (!user) {
-				return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+				return res.status(401).json({ error: 'Utilisateur non trouvé' });
 			}
 			bcrypt.compare(req.body.password, user.password)
 				.then(valid => {
 					if (!valid) {
-						return res.status(401).json({ error: 'Mot de passe incorrect !' });
+						return res.status(401).json({ error: 'Mot de passe incorrect' });
 					}
 					res.status(200).json({
 						userId: user._id,
+						name: user.name,
 						token: jwt.sign(
 							{ userId: user._id },
 							'RANDOM_TOKEN_SECRET',
@@ -39,4 +41,13 @@ exports.login = (req, res, next) => {
 				.catch(error => res.status(500).json({ error }));
 		})
 		.catch(error => res.status(500).json({ error }));
+};
+
+exports.getAllArticlesByUser = (req, res, next) => {
+  User.find({_id: req.params.id}).populate("articles")
+    .then((user) => res.status(200).json({
+			_id: user[0]._id,
+			articles: user[0].articles,
+		}))
+    .catch(error => res.status(400).json({ error }));
 };

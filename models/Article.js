@@ -5,7 +5,11 @@ const articleSchema = mongoose.Schema({
   description: { type: String, required: true },
   content: { type: String, required: true },
   imageUrl: { type: String },
-  userId: { type: String, required: true },
+  user: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
