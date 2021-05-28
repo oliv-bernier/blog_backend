@@ -2,19 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const articlesCtrl = require('../controllers/articleController');
-const userCtrl = require('../controllers/userController');
-// const auth = require('../middlewares/auth');
+const auth = require('../middlewares/auth');
+const multer = require('../middlewares/multer-config');
 
 // create
-router.post('/', articlesCtrl.createArticle);
+router.post('/', auth, multer, articlesCtrl.createArticle);
 // update
-router.put('/:id', articlesCtrl.modifyArticle);
+router.put('/:id', auth, multer, articlesCtrl.modifyArticle);
 // delet
-router.delete('/:id', articlesCtrl.deleteArticle)
+router.delete('/:id', auth, articlesCtrl.deleteArticle)
 // read one
 router.get('/:id', articlesCtrl.getOneArticle);
 // read all
 router.get('/', articlesCtrl.getAllArticles);
-router.get('/user/:id', userCtrl.getAllArticlesByUser);
+// read all by user
+router.get('/user/:id', articlesCtrl.getAllArticlesByUser);
 
 module.exports = router;

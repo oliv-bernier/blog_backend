@@ -42,12 +42,3 @@ exports.login = (req, res, next) => {
 		})
 		.catch(error => res.status(500).json({ error }));
 };
-
-exports.getAllArticlesByUser = (req, res, next) => {
-  User.find({_id: req.params.id}).populate("articles")
-    .then((user) => res.status(200).json({
-			_id: user[0]._id,
-			articles: user[0].articles,
-		}))
-    .catch(error => res.status(400).json({ error }));
-};
